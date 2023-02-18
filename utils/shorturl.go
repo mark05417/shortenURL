@@ -12,7 +12,7 @@ type URL struct {
 }
 
 type ShortURLStore struct {
-	Store map[string]URL
+	Store map[string]URL // 'MQgJX5' -> {original : 'http:google.com', short : 'MQgJX5'}
 }
 
 func (s *ShortURLStore) Save(url URL) string {
@@ -25,6 +25,17 @@ func (s *ShortURLStore) Save(url URL) string {
 func (s *ShortURLStore) Retrieve(short string) (URL, bool) {
 	url, ok := s.Store[short]
 	return url, ok
+}
+
+func (s *ShortURLStore) ListURLs() (data []URL) {
+	for _, val := range s.Store {
+		data = append(data, val)
+	}
+	return data
+}
+
+func (s *ShortURLStore) DeleteURLs() {
+	s.Store = map[string]URL{}
 }
 
 func GenerateRandomShortURL() string {
