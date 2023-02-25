@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  go-backend:
+    image: go-backend
+    ports:
+      - "8888:8888"
+
+  vue-frontend:
+    image: vue-frontend
+    ports:
+      - "8080:8080"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+
+  mysqldb:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: myrootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
