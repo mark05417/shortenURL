@@ -1,7 +1,7 @@
 .PHONY: all
 
 all: # main.go, Dockerfile, go.mod, go.sum
-	docker build -t go-backend .
+	docker build -t go-backend ./backend
 	docker build -t vue-frontend ./frontend
 
 up:
