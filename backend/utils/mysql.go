@@ -42,7 +42,12 @@ func (s *ShortURLStoreMysql) ListURLs() (data []URL) {
 	return
 }
 
+func (s *ShortURLStoreMysql) DeleteURL(short string) {
+	s.DB.Exec("delete from mydatabase.url_mapping where short = ?", short)
+	return
+}
+
 func (s *ShortURLStoreMysql) DeleteURLs() {
-	s.DB.Exec("delete from url_mapping")
+	s.DB.Exec("delete from mydatabase.url_mapping")
 	return
 }

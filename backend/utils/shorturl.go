@@ -27,5 +27,6 @@ type Store interface {
 	Save(url URL) string
 	Retrieve(short string) (URL, bool)
 	ListURLs() (data []URL)
+	DeleteURL(short string)
 	DeleteURLs()
 }

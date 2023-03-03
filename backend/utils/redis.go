@@ -37,6 +37,11 @@ func (s *ShortURLStoreRedis) ListURLs() (data []URL) {
 	return
 }
 
+func (s *ShortURLStoreRedis) DeleteURL(short string) {
+	s.DB.Del(short)
+	return
+}
+
 func (s *ShortURLStoreRedis) DeleteURLs() {
 	s.DB.FlushAll()
 	return

@@ -1,18 +1,14 @@
 <template>
-  <div id="header">
-    <img alt="URL logo" src="./assets/icon.png">
-  </div>
-
-  <div id="sidebar_left">
-  </div>
-
-  <div id="content">
-    <ShortenURL @shorten-success="refreshList" msg="Shorten"/>
-    <ListURL @refresh="refreshList" @hide="hideList" @clear="refreshList" :urls="urls" msg="Table"/>
-  </div>
-
-  <div id="footer">
-    All Copyright Reserved, Mark Hsu, 2023
+  <div id="app">
+    <div id="header"> <img alt="URL logo" src="./assets/icon.png"> </div>
+    <div style="display: flex;">
+      <div id="sidebar_left"></div>
+      <div id="content">
+        <ShortenURL @shorten-success="refreshList" msg="Shorten"/>
+        <ListURL @refresh="refreshList" @clear="refreshList" :urls="urls" msg="Table"/>
+      </div>
+    </div>
+    <div id="footer"> All Copyright Reserved, Mark Hsu, 2023 </div>
   </div>
 </template>
 
@@ -33,9 +29,6 @@ export default {
     };
   },
   methods: {
-    async hideList() {
-      this.urls = [];
-    },
     async refreshList() {
       const res = await axios.get("http://localhost:8888/api/urls");
       this.urls = res.data;
@@ -45,42 +38,39 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /* background-color: cadetblue; */
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 #header{
-  background-color:#ffffff;
-  height:80px;
-  text-align:center;
-  line-height:80px;
+  background-color: #ffffff;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
 }
 #sidebar_left{
-  margin-top: 20px;
-  background-color:#e4fce4;
-  text-align:center;
-  width:300px;
-  height:500px;
-  float:left;
+  background-color: #e4fce4;
+  text-align: center;
+  width: 300px;
+  flex-shrink: 0;
+  overflow-y: auto;
 }
 #content{
-  margin-top: 20px;
-  background-color:#fcf0d0;
-  text-align:center;
-  height:500px;
+  background-color: #fcf0d0;
+  text-align: center;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 #footer{
-  clear:both;
-  float:unset;
-  background-color:#e4e4e4;
-  height:80px;
-  text-align:center;
-  line-height:80px;
+  background-color: #e4e4e4;
+  height: 80px;
+  text-align: center;
+  line-height: 80px;
 }
 </style>

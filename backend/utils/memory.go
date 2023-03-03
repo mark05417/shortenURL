@@ -23,6 +23,10 @@ func (s *ShortURLStore) ListURLs() (data []URL) {
 	return data
 }
 
+func (s *ShortURLStore) DeleteURL(short string) {
+	delete(s.Store, short)
+}
+
 func (s *ShortURLStore) DeleteURLs() {
 	s.Store = map[string]URL{}
 }

@@ -39,8 +39,8 @@ func (h *handler) RetrieveURL(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "URL not found"})
 		return
 	}
-	fmt.Println(short)
-	fmt.Println(url)
+	// fmt.Println(short)
+	// fmt.Println(url)
 	c.Redirect(http.StatusFound, url.Original)
 }
 
@@ -49,8 +49,15 @@ func (h *handler) ListURLs(c *gin.Context) {
 	for i := range urls {
 		urls[i].Short = c.Request.Host + "/" + urls[i].Short
 	}
-	fmt.Println(urls)
+	// fmt.Println(urls)
 	c.JSON(http.StatusOK, urls)
+}
+
+func (h *handler) DeleteURL(c *gin.Context) {
+	short := c.Param("short")
+	h.Store.DeleteURL(short)
+	// fmt.Println(short)
+	c.JSON(http.StatusOK, gin.H{})
 }
 
 func (h *handler) DeleteURLs(c *gin.Context) {
@@ -98,6 +105,7 @@ func main() {
 	router.POST("/api/shorten", h.ShortenURL)
 	router.GET("/:short", h.RetrieveURL)
 	router.GET("/api/urls", h.ListURLs)
+	router.DELETE("/api/:short", h.DeleteURL)
 	router.DELETE("/api/urls", h.DeleteURLs)
 
 	if err := router.Run(":8888"); err != nil {
