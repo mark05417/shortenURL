@@ -9,6 +9,7 @@ import (
 type URL struct {
 	Original string `json:"original"`
 	Short    string `json:"short"`
+	Count    int    `json:"count"`
 }
 
 func GenerateRandomShortURL() string {
@@ -26,6 +27,7 @@ func GenerateRandomShortURL() string {
 type Store interface {
 	Save(url URL) string
 	Retrieve(short string) (URL, bool)
+	IncreaseCount(short string)
 	ListURLs() (data []URL)
 	DeleteURL(short string)
 	DeleteURLs()

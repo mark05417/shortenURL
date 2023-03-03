@@ -2,7 +2,8 @@ package utils
 
 import (
 	"context"
-	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/go-redis/redis"
 )
@@ -15,30 +16,43 @@ type ShortURLStoreRedis struct {
 func (s *ShortURLStoreRedis) Save(url URL) string {
 	short := GenerateRandomShortURL()
 	url.Short = short
-	s.DB.Set(short, url.Original, 0)
+	s.DB.Set("url:"+short, url.Original, 0)
+	s.DB.Set("count:"+short, 0, 0)
 	return short
 }
 
 func (s *ShortURLStoreRedis) Retrieve(short string) (URL, bool) {
-	original, err := s.DB.Get(short).Result()
-	fmt.Println(short, original, err)
+	original, err := s.DB.Get("url:" + short).Result()
 	if err != nil {
 		return URL{Short: short}, false
 	}
 	return URL{Short: short, Original: original}, true
 }
 
+func (s *ShortURLStoreRedis) IncreaseCount(short string) {
+	countStr, _ := s.DB.Get("count:" + short).Result()
+	count, _ := strconv.Atoi(countStr)
+	count++
+	s.DB.Set("count:"+short, count, 0)
+	return
+}
+
 func (s *ShortURLStoreRedis) ListURLs() (data []URL) {
-	keys, _ := s.DB.Keys("*").Result()
-	for _, key := range keys {
-		original, _ := s.DB.Get(key).Result()
-		data = append(data, URL{Short: key, Original: original})
+	keys, _ := s.DB.Keys("url:*").Result()
+	for _, key2 := range keys {
+		key := strings.Split(key2, "url:")[1]
+
+		original, _ := s.DB.Get("url:" + key).Result()
+		countStr, _ := s.DB.Get("count:" + key).Result()
+		count, _ := strconv.Atoi(countStr)
+		data = append(data, URL{Short: key, Original: original, Count: count})
 	}
 	return
 }
 
 func (s *ShortURLStoreRedis) DeleteURL(short string) {
-	s.DB.Del(short)
+	s.DB.Del("url:" + short)
+	s.DB.Del("count:" + short)
 	return
 }
 

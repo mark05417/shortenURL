@@ -6,6 +6,7 @@
         <tr>
           <th>Original URL</th>
           <th>Short URL</th>
+          <th>Count</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -13,6 +14,7 @@
         <tr v-for="(url, index) in urls" :key="index">
           <td>{{ url.original }}</td>
           <td>{{ url.short }}</td>
+          <td class="td-center">{{ url.count }}</td>
           <td class="td-center"><button class="delete-btn" @click="deleteURL(url.short)">X</button></td>
         </tr>
       </tbody>

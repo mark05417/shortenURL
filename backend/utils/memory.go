@@ -16,6 +16,13 @@ func (s *ShortURLStore) Retrieve(short string) (URL, bool) {
 	return url, ok
 }
 
+func (s *ShortURLStore) IncreaseCount(short string) {
+	url, _ := s.Store[short]
+	url.Count++
+	s.Store[short] = url
+	return
+}
+
 func (s *ShortURLStore) ListURLs() (data []URL) {
 	for _, val := range s.Store {
 		data = append(data, val)

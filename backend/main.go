@@ -39,6 +39,7 @@ func (h *handler) RetrieveURL(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "URL not found"})
 		return
 	}
+	h.Store.IncreaseCount(short)
 	// fmt.Println(short)
 	// fmt.Println(url)
 	c.Redirect(http.StatusFound, url.Original)
