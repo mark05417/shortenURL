@@ -20,5 +20,3 @@
 
 ## Mysql
 - mysql --port=3306 -h0.0.0.0 -umyuser -pmypassword
-- sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-host=0.0.0.0 --mysql-port=3306 --mysql-user=myuser --mysql-password=mypassword --mysql-db=mydatabase --tables=10 --table-size=1000000 --events=100000000 --report-interval=10 --threads=4 --time=300 prepare
-- sysbench /usr/share/sysbench/oltp_read_write.lua --mysql-host=0.0.0.0 --mysql-port=3306 --mysql-user=myuser --mysql-password=mypassword --mysql-db=mydatabase --tables=10 --table-size=1000000 --events=100000000 --report-interval=10 --threads=4 --time=300 run
