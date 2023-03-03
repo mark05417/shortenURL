@@ -4,6 +4,9 @@ all: # main.go, Dockerfile, go.mod, go.sum
 	docker build -t go-backend ./backend
 	docker build -t vue-frontend ./frontend
 
+up-db:
+	docker-compose up -d mysqldb mongodb redis
+
 up:
 	docker-compose up -d
 

@@ -1,0 +1,8 @@
+USE DATABASE mydatabase;
+
+CREATE TABLE url_mapping (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  short VARCHAR(255),
+  original VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
