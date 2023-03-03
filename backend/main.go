@@ -66,7 +66,7 @@ func (h *handler) DeleteURLs(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-var dbType = "mysql"
+var dbType = "memory"
 
 func main() {
 	corsConfig := cors.DefaultConfig()
